@@ -19,19 +19,22 @@ public class MatrizAdjacencia {
         matrizAdjacente[verticeOrigem.valor - 1][verticeDestino.valor - 1] = 0;
     }
 
-    public void existeAresta(int verticeOrigem, int verticeDestino) {
+    public boolean existeAresta(int verticeOrigem, int verticeDestino) {
         System.out.println("Existe aresta de v" + verticeOrigem + " à v" + verticeDestino + "?");
-        if (matrizAdjacente[verticeOrigem - 1][verticeDestino - 1] == 1)
+        if (matrizAdjacente[verticeOrigem - 1][verticeDestino - 1] == 1) {
             System.out.println("EXISTE ARESTA DE v" + verticeOrigem + " à v" + verticeDestino);
-        else
+            return true;
+        } else {
             System.out.println("NÃO EXISTE ARESTA DE v" + verticeOrigem + " à v" + verticeDestino);
+            return false;
+        }
     }
 
     public void imprimirGrafo() {
         System.out.print("    ");
         for (int k = 0; k < numeroDeVertices; k++)
             System.out.print("v" + (k + 1) + " ");
-        System.out.println("");
+        System.out.println();
         for (int i = 0; i < matrizAdjacente.length; i++) {
             System.out.print("v" + (i + 1) + " [ " + matrizAdjacente[i][0]);
             for (int j = 1; j < matrizAdjacente[0].length; j++) {
@@ -39,6 +42,5 @@ public class MatrizAdjacencia {
             }
             System.out.print(" ]\n");
         }
-        System.out.println("");
     }
 }
