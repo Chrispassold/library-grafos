@@ -1,25 +1,22 @@
 package src.core;
 
-import java.util.ArrayList;
-
 /**
  * Classe que representa um vértice do grafo.
  *
  * @author matheus
  */
 public class Vertice {
-    static public ArrayList<Vertice> verticesGrafo = null;
-    public char valor = 0;
-    public boolean visitado = false;
+    public int valor;
 
     /**
      * Cria um vértice com várias arestas.
      */
-    public Vertice(char valor) {
+    public Vertice(int valor) {
         this.valor = valor;
+    }
 
-        if (verticesGrafo == null)
-            verticesGrafo = new ArrayList<>();
+    public Vertice(String valor) {
+        this(Integer.valueOf(valor));
     }
 
     @Override

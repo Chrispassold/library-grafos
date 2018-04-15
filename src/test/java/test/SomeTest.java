@@ -25,12 +25,20 @@
 package test;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+import src.core.Grafo;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertNotNull;
 
 public class SomeTest {
 
-    @Test public void test1() {
-        assertEquals(1,1);
+    @Test
+    public void test1() throws IOException {
+
+        Grafo grafo = new Grafo("D:\\Documentos\\Arquivos\\Projetos\\FURB\\Grafos\\library-grafos\\test.tmp");
+
+        assertNotNull(grafo);
     }
 
 }
