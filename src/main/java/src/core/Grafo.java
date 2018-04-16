@@ -8,6 +8,7 @@ public class Grafo {
 
     private MatrizAdjacencia _matrizAdjacencia;
     private String _arquivo;
+    private int _numeroDeVertices = 0;
 
     /**
      * Cria um novo grafo baseado na leitura de arquivo.
@@ -16,8 +17,17 @@ public class Grafo {
      */
     public Grafo(String arquivo) throws IOException {
         _arquivo = arquivo;
+        _matrizAdjacencia = new MatrizAdjacencia();
 
         loadGrafo();
+    }
+
+    private int getNumeroDeVertices() {
+        return _numeroDeVertices;
+    }
+
+    private void setNumeroDeVertices(int numeroDeVertices) {
+        this._numeroDeVertices = numeroDeVertices;
     }
 
     private void loadGrafo() throws IOException {
@@ -40,7 +50,7 @@ public class Grafo {
                     throw new InvalidFormatFileException(lineValues.length);
                 }
 
-                _matrizAdjacencia = new MatrizAdjacencia(Integer.valueOf(lineValues[0]));
+                this.setNumeroDeVertices(Integer.valueOf(lineValues[0]));
                 firstLine = false;
                 continue;
             }
@@ -61,9 +71,9 @@ public class Grafo {
 
     }
 
-    public void imprimirGrafo() {
+    public void imprimirMatrizAdjacencia() {
         if (_matrizAdjacencia != null) {
-            _matrizAdjacencia.imprimirGrafo();
+            _matrizAdjacencia.imprimir();
         }
     }
 

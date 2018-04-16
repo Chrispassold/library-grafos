@@ -1,22 +1,27 @@
 package src.core;
 
+import java.security.InvalidParameterException;
+
 /**
  * Classe que representa um vértice do grafo.
  *
  * @author matheus
  */
 public class Vertice {
-    public int valor;
+    private String valor;
 
     /**
      * Cria um vértice com várias arestas.
      */
-    public Vertice(int valor) {
-        this.valor = valor;
+    public Vertice(String valor) {
+        if (valor == null || valor.isEmpty())
+            throw new InvalidParameterException(String.format("O vértice deve conter um valor válido, teve %s", String.valueOf(valor)));
+
+        this.valor = valor.toUpperCase(); //para ficar esteticamente organizado
     }
 
-    public Vertice(String valor) {
-        this(Integer.valueOf(valor));
+    public String getValor() {
+        return valor;
     }
 
     @Override
@@ -24,16 +29,10 @@ public class Vertice {
         if (obj == null)
             return false;
 
-        return this.hashCode() == obj.hashCode();
-    }
+        if (obj instanceof Vertice) {
+            return this.valor.equals(((Vertice) obj).getValor());
+        }
 
-    @Override
-    public int hashCode() {
-        return valor;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(valor);
+        return false;
     }
 }
