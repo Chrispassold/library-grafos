@@ -3,6 +3,7 @@ package src.core;
 import src.exception.InvalidFormatFileException;
 
 import java.io.*;
+import java.util.List;
 
 public class Grafo {
 
@@ -64,7 +65,10 @@ public class Grafo {
             }
 
         }
+    }
 
+    public List<GrauVertice> getGrauVertices() {
+        return _matrizAdjacencia.getGrauVertices();
     }
 
 }

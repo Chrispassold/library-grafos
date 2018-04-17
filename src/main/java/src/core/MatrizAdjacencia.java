@@ -64,6 +64,24 @@ public class MatrizAdjacencia {
         return false;
     }
 
+    public List<GrauVertice> getGrauVertices() {
+        Set<Map.Entry<Vertice, List<Vertice>>> entries = _matrizAdjacencia.entrySet();
+        List<GrauVertice> grauVertices = new ArrayList<>();
+        for (Map.Entry<Vertice, List<Vertice>> entry : entries) {
+
+            GrauVertice grauVertice = new GrauVertice(entry.getKey());
+
+            if (entry.getValue() != null) {
+                grauVertice.setGrau(entry.getValue().size());
+            }
+
+            grauVertices.add(grauVertice);
+        }
+
+        return grauVertices;
+    }
+
+
     public void imprimir() {
 
         throw new NotImplementedException();
