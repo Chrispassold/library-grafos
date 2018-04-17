@@ -2,15 +2,20 @@ package src.core;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MatrizAdjacencia {
 
     private int _quantidadeVertices = 0;
     private Map<Vertice, List<Vertice>> _matrizAdjacencia;
+    private Map<Vertice, Integer> _grauVertice;
 
     public MatrizAdjacencia() {
         _matrizAdjacencia = new HashMap<>();
+        _grauVertice = new HashMap<>();
     }
 
     public int getQuantidadeVertices() {
@@ -41,6 +46,7 @@ public class MatrizAdjacencia {
             _matrizAdjacencia.put(verticeOrigem, vertices);
         }
 
+        updateGrau(verticeOrigem);
     }
 
     /**
@@ -64,23 +70,16 @@ public class MatrizAdjacencia {
         return false;
     }
 
-    public List<GrauVertice> getGrauVertices() {
-        Set<Map.Entry<Vertice, List<Vertice>>> entries = _matrizAdjacencia.entrySet();
-        List<GrauVertice> grauVertices = new ArrayList<>();
-        for (Map.Entry<Vertice, List<Vertice>> entry : entries) {
-
-            GrauVertice grauVertice = new GrauVertice(entry.getKey());
-
-            if (entry.getValue() != null) {
-                grauVertice.setGrau(entry.getValue().size());
-            }
-
-            grauVertices.add(grauVertice);
+    private void updateGrau(Vertice vertice) {
+        if (_matrizAdjacencia.containsKey(vertice)) {
+            final List<Vertice> adjacentes = _matrizAdjacencia.get(vertice);
+            _grauVertice.put(vertice, adjacentes.size());
         }
-
-        return grauVertices;
     }
 
+    public Map<Vertice, Integer> getGrauVertices() {
+        return _grauVertice;
+    }
 
     public void imprimir() {
 

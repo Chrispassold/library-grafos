@@ -3,7 +3,7 @@ package src.core;
 import src.exception.InvalidFormatFileException;
 
 import java.io.*;
-import java.util.List;
+import java.util.Map;
 
 public class Grafo {
 
@@ -24,6 +24,10 @@ public class Grafo {
 
     public int getQuantidadeVertices() {
         return _matrizAdjacencia.getQuantidadeVertices();
+    }
+
+    public Map<Vertice, Integer> getGrauVertices() {
+        return _matrizAdjacencia.getGrauVertices();
     }
 
     private void loadGrafo() throws IOException {
@@ -65,10 +69,6 @@ public class Grafo {
             }
 
         }
-    }
-
-    public List<GrauVertice> getGrauVertices() {
-        return _matrizAdjacencia.getGrauVertices();
     }
 
 }

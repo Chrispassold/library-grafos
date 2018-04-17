@@ -1,6 +1,7 @@
 package src.core;
 
 import java.security.InvalidParameterException;
+import java.util.Objects;
 
 /**
  * Classe que representa um vértice do grafo.
@@ -30,9 +31,14 @@ public class Vertice {
             return false;
 
         if (obj instanceof Vertice) {
-            return this.valor.equals(((Vertice) obj).getValor());
+            return this.valor.equalsIgnoreCase(((Vertice) obj).getValor());
         }
 
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.getValor());
     }
 }
