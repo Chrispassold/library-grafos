@@ -1,22 +1,66 @@
 package src.core;
 
+import src.exception.InvalidFormatFileException;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MatrizAdjacencia {
+class MatrizAdjacencia {
 
     private int _quantidadeVertices = 0;
     private Map<Vertice, List<Vertice>> _matrizAdjacencia;
     private Map<Vertice, Integer> _grauVertice;
 
-    public MatrizAdjacencia() {
+    private MatrizAdjacencia() {
         _matrizAdjacencia = new HashMap<>();
         _grauVertice = new HashMap<>();
     }
+
+    public static MatrizAdjacencia mount(String arquivo) throws IOException {
+        File file = new File(arquivo);
+        if (!file.exists() || !file.isFile()) {
+            throw new FileNotFoundException("Arquivo inválido");
+        }
+
+        MatrizAdjacencia matrizAdjacencia = new MatrizAdjacencia();
+        BufferedReader leitor = new BufferedReader(new FileReader(file));
+
+        String line;
+        boolean firstLine = true;
+        while ((line = leitor.readLine()) != null) {
+
+            String[] lineValues = line.split("[^\\d.]");
+
+            if (firstLine) {
+
+                if (lineValues.length != 1) {
+                    throw new InvalidFormatFileException(lineValues.length);
+                }
+
+                matrizAdjacencia.setQuantidadeVertices(Integer.valueOf(lineValues[0]));
+
+                firstLine = false;
+                continue;
+            }
+
+            if (lineValues.length != 2) {
+                throw new InvalidFormatFileException(lineValues.length);
+            }
+
+            Vertice verticeA = new Vertice(lineValues[0]);
+            Vertice verticeB = new Vertice(lineValues[1]);
+
+            matrizAdjacencia.inserirAresta(verticeA, verticeB);
+        }
+
+        leitor.close();
+        return matrizAdjacencia;
+    }
+
 
     public int getQuantidadeVertices() {
         return _quantidadeVertices;
