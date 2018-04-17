@@ -1,13 +1,24 @@
 package src.core;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.*;
 
 public class MatrizAdjacencia {
 
+    private int _quantidadeVertices = 0;
     private Map<Vertice, List<Vertice>> _matrizAdjacencia;
 
     public MatrizAdjacencia() {
         _matrizAdjacencia = new HashMap<>();
+    }
+
+    public int getQuantidadeVertices() {
+        return _quantidadeVertices;
+    }
+
+    public void setQuantidadeVertices(int quantidadeVertices) {
+        this._quantidadeVertices = quantidadeVertices;
     }
 
     /**
@@ -46,35 +57,16 @@ public class MatrizAdjacencia {
     }
 
     public boolean existeAresta(Vertice verticeOrigem, Vertice verticeDestino) {
-        System.out.println(String.format("Existe aresta de v%s à v%s?", verticeOrigem.getValor(), verticeDestino.getValor()));
-
         if (_matrizAdjacencia.containsKey(verticeOrigem)) {
             List<Vertice> adjacentes = _matrizAdjacencia.get(verticeOrigem);
-            if (adjacentes.contains(verticeDestino)) {
-                System.out.println("EXISTE");
-                return true;
-            }
+            return adjacentes.contains(verticeDestino);
         }
-        System.out.println("NÃO EXISTE");
         return false;
     }
 
     public void imprimir() {
 
-        Set<Vertice> verticesOrigem = _matrizAdjacencia.keySet();
-        for (Vertice verticeColuna : verticesOrigem) {
-            System.out.print("v" + verticeColuna.getValor() + " ");
-            System.out.println();
-            for (Vertice verticeLinha : verticesOrigem) {
-                List<Vertice> adjacentes = _matrizAdjacencia.get(verticeLinha);
-                System.out.print("v" + verticeLinha.getValor() + " [ ");
-                for (Vertice adjacente : adjacentes) {
-                    System.out.print(adjacente.getValor() + ", ");
-                }
-                System.out.print(" ]\n");
-            }
-        }
-
+        throw new NotImplementedException();
 
 //        System.out.print("    ");
 //        for (int k = 0; k < numeroDeVertices; k++)
