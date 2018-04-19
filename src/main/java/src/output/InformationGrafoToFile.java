@@ -3,7 +3,9 @@ package src.output;
 import src.core.Grafo;
 import src.core.Vertice;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +34,6 @@ public class InformationGrafoToFile {
             //Escreve a quantidade de vertices
             out.write(String.format("Quantidade de vértices: %d", grafo.getQuantidadeVertices()));
 
-        } finally {
             System.out.printf("O arquivo de saída foi gerado em %s", destination);
         }
     }

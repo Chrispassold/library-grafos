@@ -1,7 +1,8 @@
-package src.core;
+package src.core.representation.impl;
 
+import src.core.Vertice;
+import src.core.representation.BaseGrafoRepresentation;
 import src.exception.InvalidFormatFileException;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,67 +10,58 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class MatrizAdjacencia {
+public class MatrizAdjacencia extends BaseGrafoRepresentation {
 
     private int _quantidadeVertices = 0;
     private Map<Vertice, List<Vertice>> _matrizAdjacencia;
-    private Map<Vertice, Integer> _grauVertice;
 
-    private MatrizAdjacencia() {
+    MatrizAdjacencia() {
         _matrizAdjacencia = new HashMap<>();
-        _grauVertice = new HashMap<>();
     }
 
-    public static MatrizAdjacencia mount(String arquivo) throws IOException {
+    public void mount(String arquivo) throws IOException {
         File file = new File(arquivo);
         if (!file.exists() || !file.isFile()) {
             throw new FileNotFoundException("Arquivo inválido");
         }
+        try (BufferedReader leitor = new BufferedReader(new FileReader(file))) {
 
-        MatrizAdjacencia matrizAdjacencia = new MatrizAdjacencia();
-        BufferedReader leitor = new BufferedReader(new FileReader(file));
+            String line;
+            boolean firstLine = true;
+            while ((line = leitor.readLine()) != null) {
 
-        String line;
-        boolean firstLine = true;
-        while ((line = leitor.readLine()) != null) {
+                String[] lineValues = line.split("[^\\d.]");
 
-            String[] lineValues = line.split("[^\\d.]");
+                if (firstLine) {
 
-            if (firstLine) {
+                    if (lineValues.length != 1) {
+                        throw new InvalidFormatFileException(lineValues.length);
+                    }
 
-                if (lineValues.length != 1) {
+                    this._quantidadeVertices = Integer.valueOf(lineValues[0]);
+
+                    firstLine = false;
+                    continue;
+                }
+
+                if (lineValues.length != 2) {
                     throw new InvalidFormatFileException(lineValues.length);
                 }
 
-                matrizAdjacencia.setQuantidadeVertices(Integer.valueOf(lineValues[0]));
+                Vertice verticeA = new Vertice(lineValues[0]);
+                Vertice verticeB = new Vertice(lineValues[1]);
 
-                firstLine = false;
-                continue;
+                // Grafo nao dirigido
+                inserirAresta(verticeA, verticeB);
+                inserirAresta(verticeB, verticeA);
             }
-
-            if (lineValues.length != 2) {
-                throw new InvalidFormatFileException(lineValues.length);
-            }
-
-            Vertice verticeA = new Vertice(lineValues[0]);
-            Vertice verticeB = new Vertice(lineValues[1]);
-
-            // Grafo nao dirigido
-            matrizAdjacencia.inserirAresta(verticeA, verticeB);
-            matrizAdjacencia.inserirAresta(verticeB, verticeA);
         }
 
-        leitor.close();
-        return matrizAdjacencia;
     }
 
 
     public int getQuantidadeVertices() {
         return _quantidadeVertices;
-    }
-
-    public void setQuantidadeVertices(int quantidadeVertices) {
-        this._quantidadeVertices = quantidadeVertices;
     }
 
     /**
@@ -115,31 +107,10 @@ class MatrizAdjacencia {
         return false;
     }
 
-    private void updateGrau(Vertice vertice) {
+    protected void updateGrau(Vertice vertice) {
         if (_matrizAdjacencia.containsKey(vertice)) {
             final List<Vertice> adjacentes = _matrizAdjacencia.get(vertice);
-            _grauVertice.put(vertice, adjacentes.size());
+            addGrau(vertice, adjacentes.size());
         }
-    }
-
-    public Map<Vertice, Integer> getGrauVertices() {
-        return _grauVertice;
-    }
-
-    public void imprimir() {
-
-        throw new NotImplementedException();
-
-//        System.out.print("    ");
-//        for (int k = 0; k < numeroDeVertices; k++)
-//            System.out.print("v" + (k + 1) + " ");
-//        System.out.println();
-//        for (int i = 0; i < matrizAdjacente.length; i++) {
-//            System.out.print("v" + (i + 1) + " [ " + matrizAdjacente[i][0]);
-//            for (int j = 1; j < matrizAdjacente[0].length; j++) {
-//                System.out.print(", " + matrizAdjacente[i][j]);
-//            }
-//            System.out.print(" ]\n");
-//        }
     }
 }
