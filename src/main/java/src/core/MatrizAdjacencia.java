@@ -54,7 +54,9 @@ class MatrizAdjacencia {
             Vertice verticeA = new Vertice(lineValues[0]);
             Vertice verticeB = new Vertice(lineValues[1]);
 
+            // Grafo nao dirigido
             matrizAdjacencia.inserirAresta(verticeA, verticeB);
+            matrizAdjacencia.inserirAresta(verticeB, verticeA);
         }
 
         leitor.close();
@@ -89,7 +91,6 @@ class MatrizAdjacencia {
 
             _matrizAdjacencia.put(verticeOrigem, vertices);
         }
-
         updateGrau(verticeOrigem);
     }
 

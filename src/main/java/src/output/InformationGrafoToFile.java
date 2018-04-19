@@ -14,10 +14,6 @@ public class InformationGrafoToFile {
         if (grafo == null) throw new InvalidParameterException("Grafo não pôde ser impresso");
 
         try (BufferedWriter out = new BufferedWriter(new FileWriter(destination))) {
-            //Escreve a quantidade de vertices
-            out.write(String.format("Quantidade de vértices: %d", grafo.getQuantidadeVertices()));
-            out.newLine();
-
             //Inicio da contagem das arestas
             int arestas = 0;
 
@@ -31,9 +27,13 @@ public class InformationGrafoToFile {
 
             //Escreve a quantidade de arestas
             out.write(String.format("Quantidade de arestas: %d", arestas));
+            out.newLine();
 
-        } catch (IOException e) {
-            throw e;
+            //Escreve a quantidade de vertices
+            out.write(String.format("Quantidade de vértices: %d", grafo.getQuantidadeVertices()));
+
+        } finally {
+            System.out.printf("O arquivo de saída foi gerado em %s", destination);
         }
     }
 }

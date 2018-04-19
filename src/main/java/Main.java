@@ -8,8 +8,7 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Grafo grafo = new Grafo("test.tmp");
-
-        InformationGrafoToFile.toFile(grafo, "./grafo.out");
+        Grafo grafo = new Grafo("grafo.in");
+        InformationGrafoToFile.toFile(grafo, "out/grafo.out");
     }
 }
