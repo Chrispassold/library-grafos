@@ -1,11 +1,10 @@
-package src.core;
+package src2.core;
 
 import java.security.InvalidParameterException;
 import java.util.Objects;
 
 /**
  * Classe que representa um vértice do grafo.
- *
  */
 public class Vertice {
     private String valor;
